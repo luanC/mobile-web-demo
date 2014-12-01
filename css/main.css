@@ -1,0 +1,40 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+
+body {
+	font-family: 'Open Sans', 'Helvetica', sans-serif;
+	font-weight: 400;
+	margin: 0;
+}
+
+h1, h2 {
+	font-weight: 700;
+}
+
+#canvas {
+	width: 1200px;
+	height: 600px;
+	border: 1px solid BLACK;
+}
+
+#color-selection {
+	background-color: LIGHTGRAY;
+	width: 200px;
+	text-align: center;
+}
+
+#colors {
+	list-style: none;
+	padding: 0 20px;
+}
+
+.swatch {
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 75px;
+	height: 75px;
+	border-radius: 10px;
+}
+
+#colors li:nth-child(odd) {
+	margin-right: 10px;
+}
