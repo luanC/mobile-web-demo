@@ -2,6 +2,7 @@
 
 var canvas;
 var ctx;
+var tool;
 
 $(function() {
 	setupPalette();
@@ -11,9 +12,26 @@ $(function() {
 
 	$('.swatch').click(function() {
 		changeColor($(this).css('background-color'));
-		drawRectangle(50,100,25,75);
+	});
+
+	$('.draw-tool').click(function() {
+		$('')
+		console.log($(this).val());
 	});
 	
+	var startingPosition;
+	$(canvas)
+		.mousedown(function(event) {
+			startingPosition = getMousePosition(event);
+		})
+		.mouseup(function(event) {
+			var endingPosition = getMousePosition(event);
+			drawRectangle(startingPosition.x, startingPosition.y, endingPosition.x, endingPosition.y);
+		});
+
+	$('#delete').click(function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	});
 	
 });
 
@@ -57,7 +75,11 @@ function setupPalette() {
 }
 
 
-		//var item = $('<li>');
-		//var name = $('<p>').text(color);
-		//item.append(swatch);
-		//item.append(name);
+// Credit: http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
+function getMousePosition(event) {
+	var rect = canvas.getBoundingClientRect();
+	return {
+		x: Math.round((event.clientX-rect.left)/(rect.right-rect.left)*canvas.width),
+		y: Math.round((event.clientY-rect.top)/(rect.bottom-rect.top)*canvas.height)
+	};
+}

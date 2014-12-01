@@ -8,21 +8,21 @@
 	</head>
 
 	<body>
-		<h1>Mobile Canvas</h1>
+		<section id="controls">
+			<h2>Tool Selection</h2>
+			<ul id="toolbox">
+				<li class="draw-tool active" value="0">Free-hand</li>
+				<li class="draw-tool" value="1">Line</li>
+				<li class="draw-tool" value="2">Rectangle</li>
+				<li class="draw-tool" value="3">Circle</li>
+			</ul>
+			<input id="delete" type="button" value="Clear Canvas" />	
+		</section>
 
 		<canvas id="canvas"></canvas>
 
-		<section id="controls">
-			<!--
-			Free-hand
-			Line
-			Square
-			Circle
-			-->
-		</section>
-
 		<section id="color-selection">
-			<h2>Colors Selection</h2>
+			<h2>Color Selection</h2>
 			<ul id="colors"></ul>
 		</section>
 		
