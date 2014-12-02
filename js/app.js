@@ -62,10 +62,12 @@ function touchLogic() {
 	});
 
 	hammer.on('panend', function(event) {
-		endingPosition = getMousePosition(event);
-		drawShape(startingPosition, endingPosition);
-		endingPosition = null;
-		hammer.off('panmove');
+		if (drawMode) {
+			endingPosition = getMousePosition(event);
+			drawShape(startingPosition, endingPosition);
+			endingPosition = null;
+			hammer.off('panmove');
+		}
 	});
 
 	hammer.on('tap', function(event) {
