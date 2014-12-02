@@ -31,32 +31,33 @@ $(function() {
 });
 
 function touchLogic() {
-	//var swipe = new Hammer.Swipe({ event: 'swipeleft swiperight' });
-	//var pan = new Hammer.Pan({ event: 'panstart' });
-	//hammer.add([swipe, pan]);
-	//pan.requireFailure(swipe);
-
 	var colorSel = $('#color-selection');
 	var toolbox = $('#controls');
 
 	var startingPosition;
 	var endingPosition;
+	var drawMode = true;
 
 	hammer.on('swipeleft', function(event) {
-		animateColorSelection(colorSel, false);
-		animateToolbox(toolbox, true);
+		if (!drawMode) {
+			animateColorSelection(colorSel, false);
+			animateToolbox(toolbox, true);					
+		}
 	});
 
 	hammer.on('swiperight', function(event) {
-		animateToolbox(toolbox, false);
-		animateColorSelection(colorSel, true);
+		if (!drawMode) {
+			animateToolbox(toolbox, false);
+			animateColorSelection(colorSel, true);			
+		}
 	});
 
 	hammer.on('panstart', function(event) {
-		startingPosition = getMousePosition(event);
-		if (tool == 0) {
-			console.log('freedraw');
-			freeDraw(startingPosition, endingPosition);
+		if (drawMode) {
+			startingPosition = getMousePosition(event);
+			if (tool == 0) {
+				freeDraw(startingPosition, endingPosition);
+			}
 		}
 	});
 
@@ -67,10 +68,15 @@ function touchLogic() {
 		hammer.off('panmove');
 	});
 
+	hammer.on('tap', function(event) {
+		drawMode = !drawMode;
+	});
+
 	// Handle color change on click/touch
 	$('.swatch').click(function() {
 		changeColor($(this).css('background-color'));
 		animateColorSelection(colorSel, true);
+		drawMode = true;
 	});
 
 	// Handle tool change on click/touch
@@ -79,10 +85,9 @@ function touchLogic() {
 		$(this).addClass('active');
 		tool = $(this).val();
 		animateToolbox(toolbox, true);
+		drawMode = true;
 	});
 }
-
-
 
 function animateColorSelection(selection, shown) {
 	if (shown) {
@@ -208,46 +213,3 @@ function getMousePosition(event) {
 		y: Math.round((event.center.y-rect.top)/(rect.bottom-rect.top)*canvas.height)
 	};
 }
-
-/* Event handlers for mouse control
-function mouseLogic() {
-	var startingPosition;
-	var endingPosition;
-	$(canvas)
-		.mousedown(function(event) {
-			startingPosition = getMousePosition(event);
-			if (tool == 0) {
-				freeDraw($(this), startingPosition, endingPosition);
-			}
-		})
-		.mouseup(function(event) {
-			endingPosition = getMousePosition(event);
-			drawShape(startingPosition, endingPosition);
-			endingPosition = null;
-			$(this).unbind('mousemove');
-		});
-}
-*/
-
-/* Test code
-function panelControl() {
-	if (smallScreen) {
-		var selection;
-		$(window).click(function(event) {
-			if (event.clientX > window.innerWidth - 40) {
-				selection = $('#color-selection');
-				animateColorSelection(selection, false);
-			} else if (event.clientX < 40) {
-				selection = $('#controls');
-				animateToolbox(selection, false);
-			}
-		});
-		$('.swatch').click(function() {
-			animateColorSelection(selection, true);
-		});
-		$('.draw-tool').click(function() {
-			animateToolbox(selection, true);
-		});
-	}	
-}
-*/
