@@ -30,7 +30,7 @@ h1, h2 {
 	box-sizing: border-box;
 }
 
-#toolbox {
+#toolbox, #delete {
 	color: BLACK;
 	list-style: none;
 	margin: auto;
@@ -55,9 +55,10 @@ h1, h2 {
 }
 
 #delete {
-	border-radius: 5px;
-	padding: 5px;
-	margin-top: 10px;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 10px 5px;
+	margin-top: 50px;
 }
 
 
@@ -88,7 +89,8 @@ h1, h2 {
 	}
 
 	#delete {
-		display: none;
+		padding: 10px 3px;
+		margin-top: 25px;
 	}
 
 	.draw-tool {
